@@ -3,13 +3,14 @@ import matplotlib.pyplot as plt
 import struct
 
 def read_idx(filename):
+    
     with open(filename, 'rb') as f:
         zero, data_type, dims = struct.unpack('>HBB', f.read(4))
         shape = tuple(struct.unpack('>I', f.read(4))[0] for d in range(dims))
         return np.fromstring(f.read(), dtype=np.uint8).reshape(shape)
 
 def stepActivationFunction(result, emptyArray):
-    #print("Activation")
+   
     counter = 0
     for x in result:
         if x >= 0:
@@ -21,10 +22,8 @@ def stepActivationFunction(result, emptyArray):
     y = np.array(emptyArray)
     return y
 
-
-
 def computeError(n, epoch, errors):
-    #print("Compute")
+    
     for x in range(0, n):
         sample = train_data[x]
         trainLabel = train_labels[x]
@@ -36,31 +35,12 @@ def computeError(n, epoch, errors):
 
         if largestComponent != trainLabel:
             errors[epoch] += 1
-
     finalError = errors[epoch]
 
     return finalError
 
-# def  updateWeights(n, w, eta, weightVector):
-#     #print("Update")
-#     x = 0
-#     while x<n:
-#         sample = train_data[x]
-#         if sample.shape != (784, 1):
-#             sample.resize(784, 1)
-#         sampleTranspose = np.transpose(sample)
-#
-#         empty = np.empty([10, 1])
-#         y = stepActivationFunction(np.matmul(w, sample), empty)
-#
-#         d = np.zeros((1, 10)).T
-#         d[train_labels[x]] = 1
-#
-#         w += eta * (np.matmul((d - y), sampleTranspose))
-#
-#         weightVector.append(w)
-#         x += 1
 def updateWeights(w, n, learningRate):
+    
     for x in range(n):
         xi = train_data[x]
         xi.resize(784, 1)
@@ -75,7 +55,6 @@ def updateWeights(w, n, learningRate):
 
 def multiclassPTA(n, w, epoch, E, eta, errors):
 
-
     flag = True
     weightsVector = []
 
@@ -85,21 +64,11 @@ def multiclassPTA(n, w, epoch, E, eta, errors):
         # Compute the error for the epoch
         error = computeError(n, epoch, errors)
         errors[epoch] = error
-
         updateWeights(w, n, eta)
-
         epoch += 1
-
         print(errors[epoch-1]/n)
         if errors[epoch - 1] / n <= E:
             break
-
-
-    print("Done")
-
-
-
-
 
 if __name__=="__main__":
 
