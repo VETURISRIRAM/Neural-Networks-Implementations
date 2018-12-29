@@ -1,4 +1,4 @@
-# Neural-Networks-Implementations
+# Neural Networks Implementations
 This repository includes the implementations of some of the Neural Networks concepts. </br>
 1) Perceptron Training Algorithm.</br>
 2) Multi-Category Perceptron Training with MNIST Dataset.</br>
